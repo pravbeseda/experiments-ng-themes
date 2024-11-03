@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {ThemeService} from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,15 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'exp-themes';
+  public readonly title = 'exp-themes';
+
+  constructor(private themeService: ThemeService) {}
+
+  switchTheme(theme: string) {
+    const themePath =
+      theme === 'bootstrap'
+        ? 'bootstrap-theme.css'
+        : 'material-theme.css';
+    this.themeService.loadTheme(themePath);
+  }
 }
