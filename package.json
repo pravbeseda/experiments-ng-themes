@@ -1,5 +1,5 @@
 {
-  "name": "exp-themes",
+  "name": "lab-themes",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build && npm run build-styles",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build-styles": "sass --load-path=node_modules src/styles/bootstrap-theme.scss public/bootstrap-theme.css && sass --load-path=node_modules src/styles/material-theme.scss public/material-theme.css"
+    "build-styles": "sass --load-path=node_modules src/app/themes/bootstrap/bootstrap-theme.scss public/bootstrap-theme.css && sass --load-path=node_modules src/app/themes/material/material-theme.scss public/material-theme.css"
   },
   "private": true,
   "dependencies": {
