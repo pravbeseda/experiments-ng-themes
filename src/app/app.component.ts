@@ -1,11 +1,29 @@
-import { Component } from '@angular/core';
+import {Component, Provider} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {ThemeService} from './services/theme.service';
+import {Themes} from './models/themes';
+import {MyButtonComponent} from './ui/components/my-button/my-button.component';
+import {BootstrapButtonComponent} from './themes/bootstrap/bootstrap-button/bootstrap-button.component';
+import {MaterialButtonComponent} from './themes/material/material-button/material-button.component';
+import {BUTTON_COMPONENT} from './ui/tokens/button-component.token';
+
+export function buttonComponentFactory(themeService: ThemeService) {
+  return themeService.currentTheme === 'bootstrap'
+    ? BootstrapButtonComponent
+    : MaterialButtonComponent;
+}
+
+const buttonComponentProvider: Provider = {
+  provide: BUTTON_COMPONENT,
+  useFactory: buttonComponentFactory,
+  deps: [ThemeService],
+};
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MyButtonComponent],
+  providers: [buttonComponentProvider],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -14,11 +32,7 @@ export class AppComponent {
 
   constructor(private themeService: ThemeService) {}
 
-  switchTheme(theme: string) {
-    const themePath =
-      theme === 'bootstrap'
-        ? 'bootstrap-theme.css'
-        : 'material-theme.css';
-    this.themeService.loadTheme(themePath);
+  public switchTheme(theme: Themes) {
+    this.themeService.switchTheme(theme);
   }
 }
